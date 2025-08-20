@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Godfather Cricket Prediction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(30, 60, 114, 0.9) 0%, rgba(42, 82, 152, 0.9) 50%, rgba(30, 60, 114, 0.9) 100%),
+                        url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 20px 15px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            flex-shrink: 0;
+        }
+
+        .title {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #ffd700;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            margin-bottom: 0;
+        }
+
+        .countdown-section {
+            text-align: center;
+            padding: 20px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .countdown-text {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-weight: 600;
+        }
+
+        .countdown-timer {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            border: 4px solid rgba(255,255,255,0.3);
+            animation: pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-timer::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .countdown-number {
+            font-size: 38px;
+            font-weight: bold;
+            color: #1e3c72;
+            z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .achievements {
+            padding: 15px 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .achievement-item {
+            background: rgba(255,255,255,0.15);
+            margin: 8px 0;
+            padding: 12px 18px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: slideInLeft 0.6s ease-out;
+            transition: transform 0.3s ease;
+        }
+
+        .achievement-item:hover {
+            transform: translateX(10px) scale(1.02);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .achievement-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .achievement-item:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .achievement-text {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .achievement-arrow {
+            color: #ffd700;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cta-section-inline {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid rgba(255,255,255,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(46, 204, 113, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        .stadium-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Cpath d='M0 200 Q200 150 400 200 L400 200 L0 200' fill='%23166534' opacity='0.6'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: bottom;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ff6b6b, #ee5a52);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-ball:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-ball:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .floating-ball:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: sparkle 2s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .title {
+                font-size: 20px;
+            }
+            
+            .countdown-timer {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .countdown-number {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="floating-elements">
+            <div class="floating-ball"></div>
+            <div class="floating-ball"></div>
+            <div class="floating-ball"></div>
+        </div>
+
+        <div class="header">
+            <div class="title">GODFATHER CRICKET PREDICTION</div>
+            <div class="subtitle">CRICKET KA ASLI GODFATHER</div>
+        </div>
+
+        <div class="countdown-section">
+            <div class="countdown-text">Free Joining Ends In</div>
+            <div class="countdown-timer">
+                <div class="countdown-number" id="countdown">24</div>
+            </div>
+            <div class="cta-section-inline">
+                <button class="cta-button" onclick="subscribe()">
+                    SUBSCRIBE FOR FREE ➤
+                </button>
+            </div>
+        </div>
+
+        <div class="achievements">
+            <div class="achievement-item">
+                <span class="achievement-arrow">➤</span>
+                <span class="achievement-text">2023 IPL - 65/66 Pass</span>
+            </div>
+            <div class="achievement-item">
+                <span class="achievement-arrow">➤</span>
+                <span class="achievement-text">2024 IPL - 30/30 Pass</span>
+            </div>
+            <div class="achievement-item">
+                <span class="achievement-arrow">➤</span>
+                <span class="achievement-text">Tipping Industry Ka Baap!</span>
+            </div>
+        </div>
+
+
+
+        <div class="stadium-bg"></div>
+    </div>
+
+    <script>
+        // Auto-redirect to channel after 7 seconds
+        let redirectTimer;
+        
+        function startAutoRedirect() {
+            redirectTimer = setTimeout(() => {
+                // Replace with your actual Telegram channel link
+                window.open('https://t.me/+P8_WQ8axUsE3NTg1', '_blank');
+            }, 7000);
+        }
+
+        // Start auto-redirect when page loads
+        window.addEventListener('load', startAutoRedirect);
+
+        // Countdown timer functionality
+        let timeLeft = 24;
+        const countdownElement = document.getElementById('countdown');
+
+        function updateCountdown() {
+            countdownElement.textContent = timeLeft;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+            } else {
+                timeLeft = 24; // Reset to 24 when it reaches 0
+            }
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+
+        // Subscribe button functionality
+        function subscribe() {
+            // Clear the auto-redirect timer since user clicked
+            clearTimeout(redirectTimer);
+            
+            // Add a click animation
+            const button = document.querySelector('.cta-button');
+            button.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                button.style.transform = '';
+                // Redirect immediately on button click
+                // Replace with your actual Telegram channel link
+                window.open('https://t.me/+P8_WQ8axUsE3NTg1', '_blank');
+            }, 150);
+        }
+
+        // Add dynamic sparkles
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            sparkle.style.animationDelay = Math.random() * 2 + 's';
+            
+            document.querySelector('.floating-elements').appendChild(sparkle);
+            
+            // Remove sparkle after animation
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+
+        // Create sparkles periodically
+        setInterval(createSparkle, 1000);
+
+        // Add entrance animations on load
+        window.addEventListener('load', () => {
+            const achievements = document.querySelectorAll('.achievement-item');
+            achievements.forEach((item, index) => {
+                item.style.animationDelay = (index * 0.2) + 's';
+            });
+        });
+    </script>
+</body>
+</html>
